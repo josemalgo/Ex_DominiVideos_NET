@@ -12,12 +12,13 @@ namespace FASE_1
         static void Main(string[] args)
         {
 
-            IsAuthenticated();
+            //IsAuthenticated();
+            ShowMenu();
             
 
         }
 
-        private static void IsAuthenticated()
+       /* private static void IsAuthenticated()
         {
             if (currentUser != null)
             {
@@ -27,7 +28,7 @@ namespace FASE_1
             {
                 Login();
             }
-        }
+        }*/
 
         private static void ShowMenuOptions()
         {
@@ -39,14 +40,13 @@ namespace FASE_1
 
         private static void ShowMenu()
         {
-            bool keepdoing = false;
-
-            ShowMenuOptions();
-
-            char option = Console.ReadKey().KeyChar;
+            bool keepdoing = true;
 
             do
             {
+                ShowMenuOptions();
+                char option = Console.ReadKey().KeyChar;
+
                 switch (option)
                 {
                     case 'a':
@@ -57,7 +57,7 @@ namespace FASE_1
                         break;
                     case 'c':
                         Console.WriteLine("Fins aviat!");
-                        keepdoing = true;
+                        keepdoing = false;
                         break;
                     default:
                         Console.WriteLine("La opció no es válida!\n");
@@ -69,7 +69,7 @@ namespace FASE_1
 
         private static void Register()
         {
-            Console.WriteLine("-- Registre d'usuari --");
+            Console.WriteLine("\n-- Registre d'usuari --");
             Console.WriteLine("Introduiex el nom d'usuari:");
             string userName = Console.ReadLine();
             Console.WriteLine("Introduiex el teu nom:");
@@ -81,7 +81,7 @@ namespace FASE_1
 
             //TODO: Validacions camps introduïts
 
-            Guid id = new Guid();
+            Guid id = Guid.NewGuid();
             User newUser = new User(id, userName, name, surname, password, DateTime.Today);
             _users.Add(id, newUser);
 
@@ -91,7 +91,7 @@ namespace FASE_1
 
         private static void Login()
         {
-            Console.WriteLine("-- Registre d'usuari --");
+            Console.WriteLine("\n-- Inici de sessió --");
             Console.WriteLine("Introduiex el nom d'usuari");
             string userName = Console.ReadLine();
             Console.WriteLine("Introduiex la contraseña");
@@ -126,7 +126,7 @@ namespace FASE_1
 
         private static void MenuUsuariOptions()
         {
-            Console.WriteLine("--- Menú d'usuari ---");
+            Console.WriteLine("\n--- Menú d'usuari ---");
             Console.WriteLine("a - Veure llistat videos.");
             Console.WriteLine("b - Crear nou video.");
             Console.WriteLine("c - Gestionar video.");
@@ -135,14 +135,13 @@ namespace FASE_1
 
         private static void MenuUsuari()
         {
-            bool keepdoing = false;
-
-            MenuUsuariOptions();
-
-            char option = Console.ReadKey().KeyChar;
+            bool keepdoing = true;
 
             do
             {
+                MenuUsuariOptions();
+                char option = Console.ReadKey().KeyChar;
+
                 switch (option)
                 {
                     case 'a':
@@ -156,7 +155,7 @@ namespace FASE_1
                         break;
                     case 'd':
                         Console.WriteLine("Fins aviat!");
-                        keepdoing = true;
+                        keepdoing = false;
                         break;
                     default:
                         Console.WriteLine("La opció no es válida!\n");
@@ -168,7 +167,7 @@ namespace FASE_1
 
         private static void ShowVideosUser()
         {
-            foreach (var video in currentUser.Videos())
+            foreach (var video in currentUser.Videos)
             {
                 Console.WriteLine(video.Title);
             }
@@ -176,7 +175,7 @@ namespace FASE_1
 
         private static void CreateVideo()
         {
-            Console.WriteLine("-- Creació d'un nou video --");
+            Console.WriteLine("\n-- Creació d'un nou video --");
             Console.WriteLine("Introduiex la URL:");
             string url = Console.ReadLine();
             Console.WriteLine("Introduiex el títol:");
@@ -196,7 +195,16 @@ namespace FASE_1
         {
             ShowVideosUser();
             Console.WriteLine("Escriu el títol del video que vols veure:");
-            Video video = _users.Values.
+            Video video = currentUser.Videos.Find(x => x.Title == Console.ReadLine());
+            
+            if(video != null)
+            {
+                MenuManageVideos(video);
+            }
+            else
+            {
+                Console.WriteLine("El títol del video que has escrit no coincidex o no existeix");
+            }
         }
 
         private static void MenuManageVideosOptions()
@@ -209,11 +217,11 @@ namespace FASE_1
             Console.WriteLine("e - Tanca Sessió.");
         }
 
-        private static void MenuManageVideos()
+        private static void MenuManageVideos(Video video)
         {
             bool keepdoing = false;
 
-            MenuUsuariOptions();
+            MenuManageVideosOptions();
 
             char option = Console.ReadKey().KeyChar;
 
@@ -222,16 +230,17 @@ namespace FASE_1
                 switch (option)
                 {
                     case 'a':
-                        
+                        Console.WriteLine("Escribe un tag para el video:");
+                        video.Tags.Add(Console.ReadLine());
                         break;
                     case 'b':
-                        
+                        video.Play();
                         break;
                     case 'c':
-                        
+                        video.Pause();
                         break;
                     case 'd':
-
+                        video.Stop();
                         break;
                     case 'e':
                         Console.WriteLine("Sortim del video.");

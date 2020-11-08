@@ -16,14 +16,15 @@ namespace FASE_1
             Stop
         }
 
-        public string Title { get; }
-        public List<string> Tags { get; }
+        public string Title { get { return _title; } }
+        public List<string> Tags { get { return _tags; } }
 
         public Video(Guid id, string url, string title, string tags)
         {
             _id = id;
             _url = url;
             _title = title;
+            _tags = new List<string>();
             _tags.Add(tags);
         }
 
@@ -32,17 +33,17 @@ namespace FASE_1
             _tags.Add(tag);
         }
 
-        public void PlayVideo()
+        public void Play()
         {
             Console.WriteLine(_options.Play);
         }
 
-        public void PauseVideo()
+        public void Pause()
         {
             Console.WriteLine(_options.Pause);
         }
 
-        public void StopVideo()
+        public void Stop()
         {
             Console.WriteLine(_options.Stop);
         }

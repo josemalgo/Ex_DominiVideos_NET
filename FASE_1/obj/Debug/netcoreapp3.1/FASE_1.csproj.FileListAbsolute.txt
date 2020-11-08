@@ -1,0 +1,13 @@
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\bin\Debug\netcoreapp3.1\FASE_1.exe
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\bin\Debug\netcoreapp3.1\FASE_1.deps.json
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\bin\Debug\netcoreapp3.1\FASE_1.runtimeconfig.json
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\bin\Debug\netcoreapp3.1\FASE_1.runtimeconfig.dev.json
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\bin\Debug\netcoreapp3.1\FASE_1.dll
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\bin\Debug\netcoreapp3.1\FASE_1.pdb
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.csprojAssemblyReference.cache
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.AssemblyInfoInputs.cache
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.AssemblyInfo.cs
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.csproj.CoreCompileInputs.cache
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.dll
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.pdb
+D:\JOSE\Documents\IT_ACADEMY\C#\Ex_DominiVideos_NET\FASE_1\obj\Debug\netcoreapp3.1\FASE_1.genruntimeconfig.cache

@@ -19,13 +19,12 @@ namespace FASE_1
         public string Title { get { return _title; } }
         public List<string> Tags { get { return _tags; } }
 
-        public Video(Guid id, string url, string title, string tags)
+        public Video(Guid id, string url, string title)
         {
             _id = id;
             _url = url;
             _title = title;
             _tags = new List<string>();
-            _tags.Add(tags);
         }
 
         public void AddTags(string tag)

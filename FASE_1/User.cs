@@ -25,10 +25,15 @@ namespace FASE_1
             _videos = new List<Video>();
         }
 
-        public void CreateVideo(Video video)
+        public bool CreateVideo(Video video)
         {
-            if(video.Save())
+            if (video.Save())
+            {
                 _videos.Add(video);
+                return true;
+            }
+
+            return false;
         }
     }
 }

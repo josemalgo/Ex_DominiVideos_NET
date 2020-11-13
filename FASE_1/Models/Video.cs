@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FASE_1
+namespace FASE_1.Models
 {
-    class Video
+    class Video : Entity
     {
         private Guid _id;
         private string _url, _title;
@@ -19,9 +19,8 @@ namespace FASE_1
         public string Title { get { return _title; } }
         public List<string> Tags { get { return _tags; } }
 
-        public Video(Guid id, string url, string title)
+        public Video(Guid id, string url, string title) : base(id)
         {
-            _id = id;
             _url = url;
             _title = title;
             _tags = new List<string>();
@@ -45,11 +44,6 @@ namespace FASE_1
         public void Stop()
         {
             Console.WriteLine(_options.Stop);
-        }
-
-        public bool Save()
-        {
-            return true;
         }
     }
 }

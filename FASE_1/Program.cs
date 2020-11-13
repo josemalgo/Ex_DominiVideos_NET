@@ -1,12 +1,34 @@
-﻿using System;
+﻿using FASE_1.Infrastructure;
+using FASE_1.Models;
+using System;
 using System.Collections.Generic;
 
 namespace FASE_1
 {
+    /// <summary>
+    /// Validaciones campos en modelos
+    /// Crear método save 
+    /// Cambiar diccionario id por userName
+    /// </summary>
     class Program
     {
-        private static Dictionary<Guid, User> _users = new Dictionary<Guid, User>();
+        private static Dictionary<string, User> _users = new Dictionary<string, User>();
         private static User currentUser = null;
+        private static Dictionary<string, string> OutputsRegisterLogin = new Dictionary<string, string>()
+        {
+            { "userName","Introdueix el nom d'usuari (anular per sortir): " },
+            { "password","Introdueix la contraseña (anular per sortir): " },
+            { "name","Introdueix el teu nom (anular per sortir): " },
+            { "surname","Introdueix el teu cognom (anular per sortir):  " },
+        };
+
+        private static Dictionary<string, string> OutputsVideo = new Dictionary<string, string>()
+        {
+            { "url","Introduiex la URL (anular per sortir): " },
+            { "title","Introduiex el títol (anular per sortir): " },
+            { "titleChoice","Escriu el títol del video que vols veure (anular per sortir): " },
+            { "tag", "\nEscriu un tag pel video (anular per sortir): " }
+        };
 
 
         static void Main(string[] args)
@@ -116,8 +138,7 @@ namespace FASE_1
                 switch (option)
                 {
                     case 'a':
-                        Console.Write("\nEscriu un tag pel video: ");
-                        video.Tags.Add(Console.ReadLine());
+                        AddTag(video);
                         break;
                     case 'b':
                         video.Play();
@@ -142,41 +163,49 @@ namespace FASE_1
 
         #endregion
 
-        private static void Register()
-        {
-            Console.WriteLine("\n-- Registre d'usuari --");
-            Console.Write("Introduiex el nom d'usuari: ");
-            string userName = Console.ReadLine();
-            Console.Write("Introduiex el teu nom: ");
-            string name = Console.ReadLine();
-            Console.Write("Introduiex el teu cognom: ");
-            string surname = Console.ReadLine();
-            Console.Write("Introduiex la contraseña: ");
-            string password = Console.ReadLine();
+        #region Validacion Inputs
 
-            //TODO: Validacions camps introduïts
-            if(ValidateFields(userName) && ValidateFields(name) && ValidateFields(surname) && ValidateFields(password))
+        static bool CancelInput(string input)
+        {
+            if (input == "anular")
             {
-                if (ValidateUserExist(userName))
-                {
-                    Guid id = Guid.NewGuid();
-                    User newUser = new User(id, userName, name, surname, password, DateTime.Today);
-                    _users.Add(id, newUser);
-                    Console.WriteLine("\nUsuari registrat amb éxit!\nYa podeu iniciar sessió.");
-                    Login();
-                }
-                else
-                {
-                    Console.WriteLine("\nEl nom d'usuari que has introduït ya existeix.");
-                }
+                Console.WriteLine("\nS'ha cancelat l'operació!. Tornem al menú.");
+                return true;
             }
+
+            return false;
+        }
+
+        private static string GetInputItemValidate(string outputInformation, int exist = 0)
+        {
+            string item = "";
+            ValidationResult valRes = new ValidationResult();
+            valRes.IsSuccess = false;
+
+            while (!valRes.IsSuccess)
+            {
+                if (valRes.Messages.Count > 0)
+                    Console.WriteLine(valRes.AllErrors);
+
+                Console.Write(outputInformation);
+                item = Console.ReadLine();
+                if (CancelInput(item))
+                    return null;
+
+                if (exist == 1 && !ValidateUserExist(item))
+                    Console.WriteLine("\nEl nom d'usuari ya s'esta utilitzant. Proba amb un altre.");
+                else
+                    valRes = User.ValidateEmptyOrNullField(item);
+            }
+
+            return item;
         }
 
         private static bool ValidateUserExist(string userName)
         {
             foreach (var user in _users)
             {
-                if(user.Value.UserName == userName)
+                if (user.Value.UserName == userName)
                 {
                     return false;
                 }
@@ -185,30 +214,11 @@ namespace FASE_1
             return true;
         }
 
-        private static void Login()
-        {
-            Console.WriteLine("\n-- Inici de sessió --");
-            Console.Write("Introduiex el nom d'usuari: ");
-            string userName = Console.ReadLine();
-            Console.Write("Introduiex la contraseña: ");
-            string password = Console.ReadLine();
-
-            if (ValidateUserLogin(userName, password))
-            {
-                MenuUsuari();
-            }
-            else
-                Console.WriteLine("\nL'usuari i/o contraseña incorrectes.");
-        }
-
         private static bool ValidateUserLogin(string userName, string password)
         {
-            if (ValidateFields(userName) && ValidateFields(password))
-                return false;
-
-            foreach(var user in _users)
+            foreach (var user in _users)
             {
-                if(user.Value.UserName == userName && user.Value.Password == password)
+                if (user.Value.UserName == userName && user.Value.Password == password)
                 {
                     currentUser = user.Value;
                     return true;
@@ -216,6 +226,48 @@ namespace FASE_1
             }
 
             return false;
+        }
+
+        #endregion
+
+        private static void Register()
+        {
+            Console.WriteLine("\n--- Registre d'usuari ---");
+            string userName = GetInputItemValidate(OutputsRegisterLogin["userName"], 1);
+            if (string.IsNullOrEmpty(userName))
+                return;
+            string password = GetInputItemValidate(OutputsRegisterLogin["password"]);
+            if (string.IsNullOrEmpty(password))
+                return;
+            string name = GetInputItemValidate(OutputsRegisterLogin["name"]);
+            if (string.IsNullOrEmpty(name))
+                return;
+            string surname = GetInputItemValidate(OutputsRegisterLogin["surname"]);
+            if (string.IsNullOrEmpty(surname))
+                return;
+
+            User newUser = new User(Guid.NewGuid(), userName, name, surname, password, DateTime.Today);
+            _users.Add(userName, newUser);
+            Console.WriteLine("\nUsuari registrat amb éxit!\nYa podeu iniciar sessió.");
+            Login();
+        }
+
+        private static void Login()
+        {
+            Console.WriteLine("\n--- Login ---");
+            string userName = GetInputItemValidate(OutputsRegisterLogin["userName"]);
+            if (string.IsNullOrEmpty(userName))
+                return;
+            string password = GetInputItemValidate(OutputsRegisterLogin["password"]);
+            if (string.IsNullOrEmpty(password))
+                return;
+
+            if (ValidateUserLogin(userName, password))
+            {
+                MenuUsuari();
+            }
+            else
+                Console.WriteLine("\nL'usuari i/o contraseña incorrectes.\n");
         }
 
         private static void ShowVideosUser()
@@ -229,7 +281,7 @@ namespace FASE_1
             Console.WriteLine();
             foreach (var video in currentUser.Videos)
             {
-                Console.WriteLine("- Títol: " + video.Title + " - Tags: " + ShowTags(video.Tags));
+                Console.WriteLine("\n- Títol: " + video.Title + " - Tags: " + ShowTags(video.Tags));
             }
         }
 
@@ -253,48 +305,43 @@ namespace FASE_1
 
         private static void CreateVideo()
         {
-            Console.WriteLine("\n-- Creació d'un nou video --");
-            Console.Write("Introduiex la URL: ");
-            string url = Console.ReadLine();
-            Console.Write("Introduiex el títol: ");
-            string title = Console.ReadLine();
+            Console.WriteLine("\n--- Creació d'un nou video ---");
+            string url = GetInputItemValidate(OutputsVideo["url"]);
+            if (string.IsNullOrEmpty(url))
+                return;
+            string title = GetInputItemValidate(OutputsVideo["title"]);
+            if (string.IsNullOrEmpty(title))
+                return;
 
-            if(ValidateFields(url) && ValidateFields(title))
-            {
-                Guid id = new Guid();
-                Video video = new Video(id, url, title);
-
-                if (currentUser.CreateVideo(video))
-                    Console.WriteLine("\nEl video s'ha creat amb éxit.");
-            }
+            Video video = new Video(Guid.NewGuid(), url, title);
+            currentUser.Videos.Add(video);
+            Console.WriteLine("\nEl video s'ha creat amb éxit.");
         }
 
         private static void ManagementVideo()
         {
-            Console.Write("\nAquets son el videos que tens: ");
+            Console.Write("\n\n- Aquets son el videos que tens: ");
             ShowVideosUser();
-            Console.Write("\nEscriu el títol del video que vols veure: ");
-            Video video = currentUser.Videos.Find(x => x.Title == Console.ReadLine());
+            
+            string title = GetInputItemValidate(OutputsVideo["title"]);
+            if (string.IsNullOrEmpty(title))
+                return;
+
+            Video video = currentUser.Videos.Find(x => x.Title == title);
             
             if(video != null)
-            {
                 MenuManageVideos(video);
-            }
             else
-            {
-                Console.WriteLine("\nEl títol del video que has escrit no coincidex o no existeix");
-            }
+                Console.WriteLine("\nEl títol del video que has escrit no coincidex o no existeix\n");
         }
 
-        private static bool ValidateFields(string item)
+        private static void AddTag(Video video)
         {
-            if (string.IsNullOrEmpty(item) || item.Replace(" ", "") == "")
-            {
-                Console.WriteLine("\nNo pot haber cap camp buit!");
-                return false;
-            }
+            string tag = GetInputItemValidate(OutputsVideo["tag"]);
+            if (string.IsNullOrEmpty(tag))
+                return;
 
-            return true;
+            video.Tags.Add(Console.ReadLine());
         }
     }
 }

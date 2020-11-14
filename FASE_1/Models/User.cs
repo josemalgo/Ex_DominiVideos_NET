@@ -31,11 +31,37 @@ namespace FASE_1.Models
             this._videos.Add(video);
         }
 
+        #region Validations
+
+        public static string GetInputItemValidate(string outputInformation, Dictionary<string,User> exist = null)
+        {
+            string item = "";
+            ValidationResult valRes = new ValidationResult();
+            valRes.IsSuccess = false;
+
+            while (!valRes.IsSuccess)
+            {
+                if (valRes.Messages.Count > 0)
+                    Console.WriteLine(valRes.AllErrors);
+
+                Console.Write(outputInformation);
+                item = Console.ReadLine();
+                if (item == "anular")
+                    return null;
+
+                if (exist != null && exist.ContainsKey(item))
+                    Console.WriteLine("\nEl nom d'usuari ya s'esta utilitzant. Proba amb un altre.");
+                else
+                    valRes = User.ValidateEmptyOrNullField(item);
+            }
+
+            return item;
+        }
+
         public static ValidationResult ValidateEmptyOrNullField(string value)
         {
             ValidationResult valRes = new ValidationResult();
             valRes.IsSuccess = true;
-
             if (string.IsNullOrEmpty(value) || value.Replace(" ", "") == "")
             {
                 valRes.IsSuccess = false;
@@ -44,5 +70,7 @@ namespace FASE_1.Models
 
             return valRes;
         }
+
+        #endregion  
     }
 }

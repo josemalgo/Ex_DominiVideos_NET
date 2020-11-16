@@ -6,7 +6,6 @@ namespace FASE_1.Models
 {
     class Video : Entity
     {
-        private Guid _id;
         private string _url, _title;
         private List<string> _tags;
         private enum _options
@@ -17,33 +16,56 @@ namespace FASE_1.Models
         }
 
         public string Title { get { return _title; } }
-        public List<string> Tags { get { return _tags; } }
 
-        public Video(Guid id, string url, string title) : base(id)
+        public Video(Guid id, string url, string title) 
+            : base(id)
         {
             _url = url;
             _title = title;
             _tags = new List<string>();
         }
 
-        public void AddTags(string tag)
-        {
-            _tags.Add(tag);
-        }
-
         public void Play()
         {
-            Console.WriteLine(_options.Play);
+            Console.WriteLine("El reproductor esta en: " + _options.Play);
         }
 
         public void Pause()
         {
-            Console.WriteLine(_options.Pause);
+            Console.WriteLine("El reproductor esta en: " + _options.Pause);
         }
 
         public void Stop()
         {
-            Console.WriteLine(_options.Stop);
+            Console.WriteLine("El reproductor esta en: " + _options.Stop);
+        }
+
+        public void Show()
+        {
+            Console.WriteLine("- Títol: " + _title + " - URL: " + _url + " - Tags: " + ConcatTags());
+        }
+
+        private string ConcatTags()
+        {
+            string concatTags = "";
+            int count = 1;
+
+            foreach (var tag in _tags)
+            {
+                if (count == _tags.Count)
+                    concatTags += tag;
+                else
+                    concatTags += tag + ", ";
+
+                count++;
+            }
+
+            return concatTags;
+        }
+
+        public void AddTag(string item)
+        {
+            _tags.Add(item);
         }
     }
 }

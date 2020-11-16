@@ -8,14 +8,14 @@ namespace FASE_1.Infrastructure
     {
 		public string inString()
 		{
-			string input = null;
-			try
+            string input = string.Empty;
+            try
 			{
 				input = Console.ReadLine();
 			}
 			catch (Exception e)
 			{
-				this.Exit();
+				Console.WriteLine("Error!! El valor introduit no és vàlid!");
 			}
 			return input;
 		}
@@ -29,15 +29,9 @@ namespace FASE_1.Infrastructure
 			}
 			catch (Exception e)
 			{
-				this.Exit();
+				Console.WriteLine("Error!! Has d'introduir un número!");
 			}
 			return input;
-		}
-
-		private void Exit()
-		{
-			Console.WriteLine("ERROR d'entrada/sortida!");
-			Environment.Exit(0);
 		}
 	}
 }

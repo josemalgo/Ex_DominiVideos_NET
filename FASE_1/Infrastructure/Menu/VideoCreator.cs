@@ -24,7 +24,7 @@ namespace FASE_1.Infrastructure.Menu
                 return;
 
             Video video = new Video(Guid.NewGuid(), url, title);
-            _app.CurrentUser.Videos.Add(video);
+            _app.CurrentUser.AddVideo(video);
             Console.WriteLine("\nEl video s'ha creat amb éxit.");
 
         }

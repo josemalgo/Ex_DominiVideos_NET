@@ -12,8 +12,6 @@ namespace FASE_1.Models
 
         public string Password { get { return _password; } }
 
-        public List<Video> Videos { get { return _videos; } }
-
         public User(Guid id, string user, string name, string surname, string password, DateTime date)
             : base(id)
         {
@@ -28,6 +26,30 @@ namespace FASE_1.Models
         public void CreateVideo(Video video)
         {
             this._videos.Add(video);
+        }
+
+        public Video SearchVideoByTitle(string title)
+        {
+            return _videos.Find(x => x.Title == title);
+        }
+
+        public void ShowListVideos()
+        {
+            if (_videos.Count == 0)
+            {
+                Console.WriteLine("No tens cap vídeo per mostrar.");
+                return;
+            }
+
+            foreach (var video in _videos)
+            {
+                video.Show();
+            }
+        }
+
+        public void AddVideo(Video video)
+        {
+            _videos.Add(video);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace FASE_1.Infrastructure.Menu
         private bool _executed;
 
         public Exit() : 
-            base("Exit")
+            base("Sortir.")
         {
             _executed = false;
         }
@@ -20,6 +20,11 @@ namespace FASE_1.Infrastructure.Menu
         public bool Executed()
         {
             return _executed;
+        }
+
+        public void TitleLogOut()
+        {
+            this.title = "Tancar sessió.";
         }
     }
 }

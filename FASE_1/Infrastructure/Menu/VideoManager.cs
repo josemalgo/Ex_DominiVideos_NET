@@ -17,17 +17,17 @@ namespace FASE_1.Infrastructure.Menu
 
         public override void Execute()
         {
-            Console.Write("\n\n- Aquets son el videos que tens: ");
-            //ShowVideosUser();
+            Console.Write("\n- Aquets son el videos que tens: ");
+            _app.CurrentUser.ShowListVideos();
 
-            string title = _app.GetInputItemValidate("Introdueix el títol del vídeo (anular per sortir): ");
+            string title = _app.GetInputItemValidate("\nIntrodueix el títol del vídeo que vols gestionar (anular per sortir): ");
             if (string.IsNullOrEmpty(title))
                 return;
 
-            Video video = _app.CurrentUser.Videos.Find(x => x.Title == title);
+            Video newVideo = _app.CurrentUser.SearchVideoByTitle(title);
 
-            if (video != null)
-                ShowMenuManagerVideo(video);
+            if (newVideo != null)
+                ShowMenuManagerVideo(newVideo);
             else
                 Console.WriteLine("\nEl títol del video que has escrit no coincidex o no existeix\n");
         }
@@ -42,6 +42,7 @@ namespace FASE_1.Infrastructure.Menu
 
             do
             {
+                Console.WriteLine("\n--- Menú gestió vídeo ---");
                 _menuManagerVideo.Show();
                 _menuManagerVideo.GetOption().Execute();
             } while (!_menuManagerVideo.Finished());

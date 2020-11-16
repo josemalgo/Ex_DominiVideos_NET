@@ -12,8 +12,6 @@ namespace FASE_1
         private Dictionary<string, User> _users;
         private User _currentUser;
         private Menu _menu;
-        private Menu _menuUser;
-        private Menu _menuManagerVideos;
 
         public Dictionary<string, User> Users { get { return _users; } }
         public User CurrentUser

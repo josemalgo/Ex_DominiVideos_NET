@@ -23,7 +23,7 @@ namespace FASE_1.Infrastructure.Menu
             if (string.IsNullOrEmpty(tag))
                 return;
 
-            _video.Tags.Add(Console.ReadLine());
+            _video.AddTag(tag);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace FASE_1.Infrastructure.Menu
             _menuUser.Add(new VideoList(_app));
             _menuUser.Add(new VideoCreator(_app));
             _menuUser.Add(new VideoManager(_app));
-            _menuUser.Add(new LogOut(_app));
+            _menuUser.CloseSesion();
 
         }
 
@@ -47,6 +47,8 @@ namespace FASE_1.Infrastructure.Menu
                 _menuUser.Show();
                 _menuUser.GetOption().Execute();
             } while (!_menuUser.Finished());
+
+            _app.CurrentUser = null;
         }
     }
 }

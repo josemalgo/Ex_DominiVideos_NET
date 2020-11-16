@@ -28,6 +28,12 @@ namespace FASE_1.Infrastructure.Menu
             this.Add(_exit);
         }
 
+        public void CloseSesion()
+        {
+            _exit.TitleLogOut();
+            this.Add(_exit);
+        }
+
         public void Show()
         {
             foreach(var option in _options)
@@ -45,12 +51,12 @@ namespace FASE_1.Infrastructure.Menu
             {
                 Console.Write("\nEscull una opció [1 - " + _quantity + "]: ");
                 option = manageIO.inInt();
-                error = !_options.ContainsKey((int)(option));
+                error = !_options.ContainsKey(option);
                 if (error)
                     Console.WriteLine("Error!!! La opció ha d'estar entre 1 y " + _quantity);
             } while (error);
 
-            return _options[(int)(option)];
+            return _options[option];
         }
 
         public bool Finished()

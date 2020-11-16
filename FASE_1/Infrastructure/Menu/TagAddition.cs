@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FASE_1.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,11 +8,13 @@ namespace FASE_1.Infrastructure.Menu
     class TagAddition : Option
     {
         private App _app;
+        private Video _video; 
 
-        public TagAddition(App app)
+        public TagAddition(App app, Video video)
             :base("Afegir tag.")
         {
             _app = app;
+            _video = video;
         }
 
         public override void Execute()
@@ -20,7 +23,7 @@ namespace FASE_1.Infrastructure.Menu
             if (string.IsNullOrEmpty(tag))
                 return;
 
-            //video.Tags.Add(Console.ReadLine());
+            _video.Tags.Add(Console.ReadLine());
         }
     }
 }

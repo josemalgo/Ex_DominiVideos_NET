@@ -8,12 +8,16 @@ namespace FASE_1.Infrastructure.Menu
         private App _app;
         private Menu _menuUser;
 
-        public LogIn(App app, Menu menuUser)
+        public LogIn(App app)
             :base("Iniciar sessió.")
         {
             _app = app;
-            _menuUser = menuUser;
-            
+            _menuUser = new Menu();
+            _menuUser.Add(new VideoList(_app));
+            _menuUser.Add(new VideoCreator(_app));
+            _menuUser.Add(new VideoManager(_app));
+            _menuUser.Add(new LogOut(_app));
+
         }
 
         public override void Execute()

@@ -5,14 +5,14 @@ namespace FASE_1.Infrastructure.Menu
 {
     class VideoManager : Option
     {
-        private App _app;
-        private Menu _menuManagerVideo; 
+        private readonly App _app;
+        private readonly Menu _menuManagerVideo; 
 
-        public VideoManager(App app, Menu menuManagerVideo)
+        public VideoManager(App app)
             : base("Gestionar vídeo.")
         {
             _app = app;
-            _menuManagerVideo = menuManagerVideo;
+            _menuManagerVideo = new Menu();
         }
 
         public override void Execute()
@@ -34,7 +34,12 @@ namespace FASE_1.Infrastructure.Menu
 
         private void ShowMenuManagerVideo(Video video)
         {
-            //TODO: añadir menu aqui??? Per pasar el vídeo seleccionat?
+            _menuManagerVideo.Add(new TagAddition(_app, video));
+            _menuManagerVideo.Add(new PlayVideo(video));
+            _menuManagerVideo.Add(new PauseVideo(video));
+            _menuManagerVideo.Add(new StopVideo(video));
+            _menuManagerVideo.Close();
+
             do
             {
                 _menuManagerVideo.Show();

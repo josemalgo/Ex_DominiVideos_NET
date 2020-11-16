@@ -12,27 +12,5 @@ namespace FASE_1
         {
             new App().Start();
         }
-
-        //private static void ManagementVideo()
-        //{
-        //    Console.Write("\n\n- Aquets son el videos que tens: ");
-        //    ShowVideosUser();
-            
-        //    string title = GetInputItemValidate(OutputsVideo["title"]);
-        //    if (string.IsNullOrEmpty(title))
-        //        return;
-
-        //    Video video = currentUser.Videos.Find(x => x.Title == title);
-            
-        //    if(video != null)
-        //        MenuManageVideos(video);
-        //    else
-        //        Console.WriteLine("\nEl títol del video que has escrit no coincidex o no existeix\n");
-        //}
-
-        //private static void AddTag(Video video)
-        //{
-        //    
-        //}
     }
 }

@@ -27,18 +27,7 @@ namespace FASE_1
             _users = new Dictionary<string, User>();
             _currentUser = null;
             _menu = new Menu();
-            _menuUser = new Menu();
-            _menuManagerVideos = new Menu();
-            _menuManagerVideos.Add(new TagAddition(this));
-            _menuManagerVideos.Add(new PlayVideo(this));
-            _menuManagerVideos.Add(new PauseVideo(this));
-            _menuManagerVideos.Add(new StopVideo(this));
-            _menuManagerVideos.Close();
-            _menuUser.Add(new VideoList(this));
-            _menuUser.Add(new VideoCreator(this));
-            _menuUser.Add(new VideoManager(this, _menuManagerVideos));
-            _menuUser.Add(new LogOut(this));
-            _menu.Add(new LogIn(this, _menuUser));
+            _menu.Add(new LogIn(this));
             _menu.Add(new RegisteringUser(this));
             _menu.Close();
         }

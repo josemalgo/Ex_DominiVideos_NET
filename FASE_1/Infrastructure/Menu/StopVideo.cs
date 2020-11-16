@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FASE_1.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,16 +7,16 @@ namespace FASE_1.Infrastructure.Menu
 {
     class StopVideo : Option
     {
-        App _app;
+        Video _video;
 
-        public StopVideo(App app)
+        public StopVideo(Video video)
             : base("Parar vídeo.")
         {
-            _app = app;
+            _video = video;
         }
         public override void Execute()
         {
-            throw new NotImplementedException();
+            _video.Stop();
         }
     }
 }

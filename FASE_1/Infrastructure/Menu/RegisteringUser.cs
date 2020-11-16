@@ -5,11 +5,11 @@ using System.Text;
 
 namespace FASE_1.Infrastructure.Menu
 {
-    class RegisterUserOption : Option
+    class RegisteringUser : Option
     {
         private App _app;
 
-        public RegisterUserOption(App app)
+        public RegisteringUser(App app)
             :base("Registrar-se.")
         {
             this._app = app;
@@ -18,22 +18,23 @@ namespace FASE_1.Infrastructure.Menu
         public override void Execute()
         {
             Console.WriteLine("\n--- Registre d'usuari ---");
-            string userName = User.GetInputItemValidate("Introdueix el nom d'usuari: ", _app.Users);
+            string userName = _app.GetInputItemValidate("Introdueix el nom d'usuari (anular per sortir): ", 1);
             if (string.IsNullOrEmpty(userName))
                 return;
-            string password = User.GetInputItemValidate("Introdueix la contrasenya: ");
+            string password = _app.GetInputItemValidate("Introdueix la contrasenya (anular per sortir): ");
             if (string.IsNullOrEmpty(password))
                 return;
-            string name = User.GetInputItemValidate("Introdueix el teu nom: ");
+            string name = _app.GetInputItemValidate("Introdueix el teu nom (anular per sortir): ");
             if (string.IsNullOrEmpty(name))
                 return;
-            string surname = User.GetInputItemValidate("Introdueix el teu cognom: ");
+            string surname = _app.GetInputItemValidate("Introdueix el teu cognom (anular per sortir): ");
             if (string.IsNullOrEmpty(surname))
                 return;
 
             User newUser = new User(Guid.NewGuid(), userName, name, surname, password, DateTime.Today);
             _app.Users.Add(userName, newUser);
-            Console.WriteLine("\nUsuari registrat amb éxit!\n");
+            _app.CurrentUser = newUser;
+            Console.WriteLine("\nUsuari registrat amb éxit!");
         }
     }
 }

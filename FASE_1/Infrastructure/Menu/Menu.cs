@@ -53,7 +53,7 @@ namespace FASE_1.Infrastructure.Menu
             return _options[(int)(option)];
         }
 
-        public bool finished()
+        public bool Finished()
         {
             return _exit.Executed();
         }

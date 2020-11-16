@@ -1,19 +1,20 @@
 ﻿
-
 namespace FASE_1.Infrastructure.Menu
 {
-    class Exit : Option
+    class LogOut : Option
     {
+        private App _app;
         private bool _executed;
 
-        public Exit() : 
-            base("Exit")
+        public LogOut(App app)
+            :base("Tancar sessió.")
         {
-            _executed = false;
+            _app = app;
         }
 
         public override void Execute()
         {
+            _app.CurrentUser = null;
             _executed = true;
         }
 
